@@ -1,0 +1,34 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: postgres
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  pool: 5
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  host: homebus-authacl-postgres
+  username: postgres
+  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  pool: 5
+  database: homebus_authacl_development
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  database: homebus_authacl_test
+
+production:
+  adapter: postgresql
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  encoding: unicode
+  timeout: 5000
+  host: <%= ENV['POSTGRESQL_HOSTNAME'] %>
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  port: <%= ENV['POSTGRESQL_PORT'] %>
+  database: homebus_authacl_production
